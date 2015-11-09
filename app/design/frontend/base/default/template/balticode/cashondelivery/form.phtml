@@ -1,0 +1,64 @@
+<?php
+/**
+ * 2015 UAB BaltiCode
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License available
+ * through the world-wide-web at this URL:
+ * http://www.gnu.org/licenses/gpl-3.0.txt
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@balticode.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to
+ * newer versions in the future.
+ *
+ *  @author    UAB Balticode Kęstutis Kaleckas
+ *  @package   Balticode_Cashondelivery
+ *  @copyright Copyright (c) 2015 UAB Balticode (http://balticode.com/)
+ *  @license   http://www.gnu.org/licenses/gpl-3.0.txt  GPLv3
+ *  @see       Balticode_Cashondelivery_Block_Form
+ */
+?>
+<?php
+    $_code = $this->getMethodCode();
+    $_extra_fee = $this->getMethod()->getAddressCosts($this->getShippingAddress());
+
+    $_extra_fee_excl = $this->convertPrice(
+        Mage::helper('Balticode_Cashondelivery/data')->getCodPrice(
+            $_extra_fee,
+            $this->helper('Balticode_Cashondelivery/data')->displayCodFeeIncludingTax(),
+            $this->getShippingAddress()
+        ),
+        true
+        );
+    $_extra_fee_incl = $this->convertPrice(
+        Mage::helper('Balticode_Cashondelivery/data')->getCodPrice(
+            $_extra_fee,
+            true,
+            $this->getShippingAddress()
+        ),
+        true
+    );
+
+    $_codFeeStr = $_extra_fee_excl;
+
+    if ($this->helper('Balticode_Cashondelivery/data')->displayCodBothPrices() && ($_extra_fee_incl != $_extra_fee_excl)) {
+        $_codFeeStr .= ' ('.$this->__('Incl. Tax').' '.$_extra_fee_incl.')';
+    }
+
+    if ($this->getMethod()->getCustomText() || $_extra_fee || Mage::getStoreConfig('payment/Balticode_Cashondelivery/display_zero_fee')): ?>
+        <fieldset class="form-list">
+            <ul id="payment_form_<?php echo $_code ?>" style="display:none;">
+                <?php if ($_extra_fee || Mage::getStoreConfig('payment/Balticode_Cashondelivery/display_zero_fee')) {
+                    echo '<li>'.$this->__('You will be charged an extra fee of %s.', $_codFeeStr).'</li>';
+                }
+                if ($this->getMethod()->getCustomText()) {
+                    echo '<li>'.$this->getMethod()->getCustomText().'</li>';
+                } ?>
+            </ul>
+        </fieldset>
+<?php endif; ?>

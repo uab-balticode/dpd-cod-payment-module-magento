@@ -1,0 +1,23 @@
+<?php
+    echo $this->htmlEscape($this->getMethod()->getTitle());
+?>
+    {{pdf_row_separator}}
+<?php
+    if ($this->getMethod()->getCustomText()) {
+        echo $this->htmlEscape($this->getMethod()->getCustomText()).'<br />';
+    }
+?>
+    {{pdf_row_separator}}
+<?php
+    $_extra_fee_excl = $this->getCodFeeExclTax();
+    $_extra_fee_incl = $this->getCodFeeInclTax();
+    if (!is_null($_extra_fee_excl)) {
+        $_codFeeStr = $_extra_fee_excl;
+        if ($this->helper('Balticode_Cashondelivery/data')->displayCodBothPrices() && ($_extra_fee_incl != $_extra_fee_excl)) {
+            $_codFeeStr .= '{{pdf_row_separator}}('.$this->__('Incl. Tax').' '.$_extra_fee_incl.')';
+        }
+        if ((float)$this->getRawCodFee() || Mage::getStoreConfig('payment/Balticode_Cashondelivery/display_zero_fee')) {
+            echo $this->__('Cash on Delivery fee %s', strip_tags($_codFeeStr));
+        }
+    }
+?>

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<layout>
+    <!-- AdminHtml Sales Order View -->
+    <adminhtml_sales_order_view>
+        <reference name="order_totals">
+            <block name="Balticode_cashondelivery_fee" type="Balticode_Cashondelivery/totals_order"/>
+        </reference>
+    </adminhtml_sales_order_view>
+    <adminhtml_sales_order_print>
+        <remove name="content" />
+        <reference name="order_totals">
+            <block name="Balticode_cashondelivery_fee" type="Balticode_Cashondelivery/totals_order"/>
+        </reference>
+    </adminhtml_sales_order_print>
+    <adminhtml_sales_order_invoice_view>
+        <reference name="invoice_totals">
+            <block name="Balticode_cashondelivery_fee" type="Balticode_Cashondelivery/totals_invoice"/>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+    <adminhtml_sales_order_invoice_new>
+        <reference name="invoice_totals">
+            <block name="Balticode_cashondelivery_fee" type="Balticode_Cashondelivery/totals_invoice"/>
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+    <adminhtml_sales_order_invoice_updateqty>
+        <reference name="invoice_totals">
+            <block name="Balticode_cashondelivery_fee" type="Balticode_Cashondelivery/totals_invoice"/>
+        </reference>
+    </adminhtml_sales_order_invoice_updateqty>
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="creditmemo_totals">
+            <block name="Balticode_cashondelivery_fee" type="Balticode_Cashondelivery/adminhtml_sales_creditmemo_create_totals"/>
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="creditmemo_totals">
+            <block name="Balticode_cashondelivery_fee" type="Balticode_Cashondelivery/totals_creditmemo"/>
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="creditmemo_totals">
+            <block name="Balticode_cashondelivery_fee" type="Balticode_Cashondelivery/totals_creditmemo"/>
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+    <adminhtml_sales_order_create_index>
+        <reference name="head">
+            <action method="addJs"><file>balticode/cashondelivery/sales.js</file></action>
+        </reference>
+    </adminhtml_sales_order_create_index>
+</layout>

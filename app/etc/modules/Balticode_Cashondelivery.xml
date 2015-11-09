@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Balticode_Cashondelivery>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Payment />
+            </depends>
+        </Balticode_Cashondelivery>
+    </modules>
+</config>
